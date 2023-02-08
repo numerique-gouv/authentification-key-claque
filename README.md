@@ -1,38 +1,64 @@
-# Beta x Django
+# Authentification x Django
+
 
 ## Introduction
 
-Ce repo est un kit de démarrage pour vos projets en Django. Il intègre :
+Ce produit tient la même promesse que tchap-identite (une authentification forte mais simple, sans mot de passe, sans identification), pour un autre public de développeuses.
 
-- le [Design System de l'Etat](https://www.systeme-de-design.gouv.fr/) (DSFR) avec [django-dsfr](https://pypi.org/project/django-dsfr/)
-- des Content Security Policies avec django-csp
-- Pre-commit, pour formatter votre code à chaque commit
-- une ébauche de CI pour vos tests automatiques
-- les paramètres pour se connecter à une base de données PostgreSQL
+Pile technique :
 
-## Utilisation
+- Python 3.10
+- Django 4
+- PostgreSQL
 
-### Installation de base
+## Installation
 
-Copier les variables d'environnement :
+### Dépendances Python
+
+Installez pipenv si ce n'est déjà fait :
+
 ```
+pip install --user pipenv
+```
+
+Vérifiez que `pipenv` est bien dans votre `$PATH`.
+
+Installez les dépendances et copiez les variables d'environnement :
+
+```
+pipenv install
 cp .env.example .env
 ```
 
 ### Installation de PostgreSQL
 
-Installer PostgreSQL en fonction de votre OS : https://www.postgresql.org/download/
-puis créer une base de données au nom choisi dans DATABASE_NAME de votre fichier .env.
+Installez PostgreSQL en fonction de votre OS : https://www.postgresql.org/download/
+
+Puis lancez l'invite de commande PostgreSQL : 
+
+```
+psql
+```
+
+Dans l'invite de commande psql, vous pouvez à présent créer la base de données et l'utilisateur :
+
+```sql
+CREATE USER authentification_team PASSWORD 'authentification_pwd';
+CREATE DATABASE authentification OWNER authentification_team;
+ALTER USER authentification_team CREATEDB;
+```
+
+Vous pouvez à présent quitter l'invite de commande psql.
 
 ### Installation de pre-commit
 
-[Pre-commit](https://pre-commit.com/) permet de linter et formatter votre code avant chaque commit. Par défaut ici, il exécute :
+[Pre-commit](https://pre-commit.com/#install) permet de linter et formatter votre code avant chaque commit. Par défaut ici, il exécute :
 
-- [black](https://github.com/psf/black) pour formatter automatiquement vos fichiers .py en conformité avec la PEP 8 (gestion des espaces, longueur des lignes, etc)
-- [flake8](https://github.com/pycqa/flake8) pour soulever les "infractions" restantes (import non utilisés, etc)
+- [black](https://github.com/psf/black) pour formatter automatiquement vos fichiers `.py` en conformité avec la PEP 8 (gestion des espaces, longueur des lignes, etc)
+- [flake8](https://github.com/pycqa/flake8) pour soulever les "infractions" restantes (`import` non utilisés, etc.)
 - [isort](https://github.com/pycqa/isort) pour ordonner vos imports
 
-Pour l'installer :
+Pour l'installer, depuis la racine de votre projet :
 
 ```bash
 pre-commit install
@@ -44,8 +70,14 @@ Vous pouvez effectuer un premier passage sur tous les fichiers du repo avec :
 pre-commit run --all-files
 ```
 
-### Exécuter les tests manuellement
+## Lancer le serveur en local
 
 ```bash
-python manage.py test
+pipenv run python manage.py runserver 3000
+```
+
+## Exécuter les tests
+
+```bash
+pipenv run python manage.py test
 ```

@@ -7,14 +7,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.9"]
+        python-version: ["3.10"]
     services:
       postgres:
         image: postgres:14-alpine
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: postgres
+          POSTGRES_USER: authentification_team
+          POSTGRES_PASSWORD: authentification_pwd
+          POSTGRES_DB: authentification
         ports:
           - 5432:5432
     steps:
@@ -25,15 +25,16 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt
+          pip install pipenv
+          pipenv install --dev
       - name: Copy empty .env.example to .env
         run: |
           cp .env.example .env
       - name: Run linting
         run: |
-          black --check .
-          flake8
-          isort . --check
+          pipenv run black --check .
+          pipenv run flake8
+          pipenv run isort . --check
       - name: Run the unit tests
         run: |
-          python manage.py test
+          pipenv run python manage.py test
