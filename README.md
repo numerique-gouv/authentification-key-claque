@@ -70,8 +70,14 @@ Vous pouvez effectuer un premier passage sur tous les fichiers du repo avec :
 pre-commit run --all-files
 ```
 
-### Exécuter les tests manuellement
+## Lancer le serveur en local
 
 ```bash
-python manage.py test
+pipenv run python manage.py runserver 3000
+```
+
+## Exécuter les tests
+
+```bash
+pipenv run python manage.py test
 ```
