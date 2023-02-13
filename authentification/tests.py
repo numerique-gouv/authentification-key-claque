@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import resolve
 
-from yourApp import views
+from authentification import views
 
 
 class TestStaticPages(TestCase):
@@ -11,7 +11,7 @@ class TestStaticPages(TestCase):
 
     def test_index_url_calls_right_template(self):
         response = self.client.get("/")
-        self.assertTemplateUsed(response, "yourApp/index.html")
+        self.assertTemplateUsed(response, "authentification/index.html")
 
     def test_index_response_contains_welcome_message(self):
         response = self.client.get("/")
@@ -23,7 +23,7 @@ class TestStaticPages(TestCase):
 
     def test_a11y_url_calls_right_template(self):
         response = self.client.get("/accessibilite/")
-        self.assertTemplateUsed(response, "yourApp/accessibility.html")
+        self.assertTemplateUsed(response, "authentification/accessibility.html")
 
     def test_a11y_response_contains_title(self):
         response = self.client.get("/accessibilite/")
