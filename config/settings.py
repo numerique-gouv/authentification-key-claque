@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 
+import django
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -36,6 +37,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "django.forms",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -67,6 +69,7 @@ TEMPLATES = [
         "DIRS": [
             os.path.join(BASE_DIR, "dsfr/templates"),
             os.path.join(BASE_DIR, "templates"),
+            os.path.join(django.__path__[0], "/forms/templates"),
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -140,7 +143,7 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
+# FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
 
 # CSP-related options
 SECURE_HSTS_SECONDS = 2592000
