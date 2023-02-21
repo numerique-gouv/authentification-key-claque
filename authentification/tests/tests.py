@@ -28,3 +28,9 @@ class TestStaticPages(TestCase):
     def test_a11y_response_contains_title(self):
         response = self.client.get("/accessibilite/")
         self.assertContains(response, "Déclaration d’accessibilité")
+
+
+class TestAdminPages(TestCase):
+    def test_admin_responds_ok(self):
+        response = self.client.get("/admin/login/")
+        self.assertEqual(200, response.status_code)
