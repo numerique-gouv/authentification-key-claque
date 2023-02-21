@@ -39,7 +39,7 @@ class TestAuthorizationInvalidRequests(TestCase):
             "scope": "",
             "response_type": "invalid-content",
             "client_id": "anything",
-            "redirect_uri": "not-even-an-uri",
+            "redirect_uri": "https://use-an-uri.com",
         }
         invalid_scopes = ("invalid-scope", "openidd email", "open id", "email phone")
         for invalid_scope in invalid_scopes:
@@ -62,3 +62,29 @@ class TestAuthorizationInvalidRequests(TestCase):
                     f"when scope parameter is {invalid_scope}"
                 ),
             )
+
+    def test_check_response_type_is_code(self):
+        request_data = {
+            "scope": "openid",
+            "response_type": "invalid-content",
+            "client_id": "anything",
+            "redirect_uri": "https://use-an-uri.com",
+        }
+        response = self.client.post("/authorize/", data=request_data)
+        self.assertEqual(
+            response.status_code,
+            400,
+            (
+                "Authorize should return an invalidrequest "
+                "when response_type is not code"
+            ),
+        )
+        response = self.client.get("/authorize/", data=request_data)
+        self.assertEqual(
+            response.status_code,
+            400,
+            (
+                "Authorize should return an invalidrequest "
+                "when response_type is not code"
+            ),
+        )

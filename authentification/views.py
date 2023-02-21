@@ -27,14 +27,19 @@ class Authorize(View):
         return self.process_request(request.POST)
 
     def process_request(self, request_data):
-        if not self.check_required_parameters(request_data):
-            return HttpResponseBadRequest()
-        if not self.check_scope(request_data.get("scope")):
+        if (
+            not self.check_required_parameters(request_data)
+            or not self.check_scope(request_data)
+            or not self.check_response_type(request_data)
+        ):
             return HttpResponseBadRequest()
         return HttpResponse()
 
     def check_required_parameters(self, parameters):
         return all(p in parameters for p in self.REQUIRED_REQUEST_PARAMETERS)
 
-    def check_scope(self, scope):
-        return "openid" in scope.split(" ")
+    def check_scope(self, request_data):
+        return "openid" in request_data.get("scope").split(" ")
+
+    def check_response_type(self, request_data):
+        return request_data.get("response_type") == "code"
