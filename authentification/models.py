@@ -6,7 +6,8 @@ class Client(models.Model):
     """OIDC Client"""
 
     name = models.CharField("Nom", max_length=200)
-    client_id = models.CharField("Identifiant", max_length=100)
+    client_id = models.CharField("Identifiant", max_length=100, unique=True)
+    client_secret = models.CharField("Secret", max_length=100)
 
 
 class RedirectUri(models.Model):
