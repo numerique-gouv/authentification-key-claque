@@ -28,5 +28,37 @@ class TestAuthorizationInvalidRequests(TestCase):
             self.assertEqual(
                 response.status_code,
                 400,
-                f"Authorize should return an invalidrequest when required parameter {required_parameter} is missing",
+                (
+                    "Authorize should return an invalidrequest "
+                    f"when required parameter {required_parameter} is missing"
+                ),
+            )
+
+    def test_scope_contains_openid(self):
+        request_data = {
+            "scope": "",
+            "response_type": "invalid-content",
+            "client_id": "anything",
+            "redirect_uri": "not-even-an-uri",
+        }
+        invalid_scopes = ("invalid-scope", "openidd email", "open id", "email phone")
+        for invalid_scope in invalid_scopes:
+            request_data["scope"] = invalid_scope
+            response = self.client.post("/authorize/", data=request_data)
+            self.assertEqual(
+                response.status_code,
+                400,
+                (
+                    "Authorize should return an invalidrequest "
+                    f"when scope parameter is {invalid_scope}"
+                ),
+            )
+            response = self.client.get("/authorize/", data=request_data)
+            self.assertEqual(
+                response.status_code,
+                400,
+                (
+                    "Authorize should return an invalidrequest "
+                    f"when scope parameter is {invalid_scope}"
+                ),
             )
