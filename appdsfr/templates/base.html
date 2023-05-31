@@ -3,37 +3,43 @@
 <html lang="fr" data-fr-scheme="system" {% if SITE_CONFIG.mourning %}data-fr-mourning{% endif %}>
 
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="{% static 'dsfr.min.css' %}">
+    {% block extra_css %}{% endblock extra_css %}
+    <meta name="theme-color" content="#000091"><!-- Couleur de thème du navigateur (Safari/Android) -->
+    <link rel="apple-touch-icon" href="{% static 'favicon/apple-touch-icon.png' %}"><!-- 180×180 -->
+    <link rel="icon" href="{% static 'favicon/favicon.svg' %}" type="image/svg+xml">
+    <link rel="shortcut icon" href="{% static 'favicon/favicon.ico' %}" type="image/x-icon"><!-- 32×32 -->
+    <link rel="manifest" href="{% static 'favicon/manifest.webmanifest' %}" crossorigin="use-credentials">
 
-  {% block extra_css %}{% endblock extra_css %}
-
-  {% block title %}
-  <title>
-  Authentification
-  </title>
-  {% endblock title %}
+    {% block title %}
+        <title>
+            {# TODO #}Titre de la page - Authentification
+        </title>
+    {% endblock title %}
 </head>
 
 <body>
-    {% block skiplinks %}
-        {#  dsfr_skiplinks skiplinks #}
-    {% endblock skiplinks %}
-    {% include "blocks/header.html" %}
-    {# dsfr_theme_modale  #}
+{% block skiplinks %}
+    {#  dsfr_skiplinks skiplinks #}
+{% endblock skiplinks %}
+{% include "blocks/header.html" %}
+{# dsfr_theme_modale  #}
 
-    <div class="fr-container fr-mt-4w fr-mb-6w">
-     {# dsfr_breadcrumb  #}
+<div class="fr-container fr-mt-4w fr-mb-6w">
+    {# dsfr_breadcrumb  #}
 
-      <main id="content" role="main">
+    <main id="content" role="main">
         {% block content %}{% endblock content %}
-      </main>
-    </div>
+    </main>
+</div>
 
-    {% include "blocks/footer.html" %}
+{% include "blocks/footer.html" %}
 
-  {# dsfr_js nonce=request.csp_nonce #}
-  {% block extra_js %}{% endblock extra_js %}
+<script type="module" src="{% static 'dsfr.module.min.js' %}"></script>
+<script type="text/javascript" nomodule src="{% static 'dsfr.nomodule.min.js' %}"></script>
+{% block extra_js %}{% endblock extra_js %}
 </body>
 
 </html>
