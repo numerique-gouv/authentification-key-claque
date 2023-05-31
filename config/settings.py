@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "widget_tweaks",
-    "dsfr",
     "authentification",
 ]
 
@@ -65,7 +64,6 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            os.path.join(BASE_DIR, "dsfr/templates"),
             os.path.join(BASE_DIR, "templates"),
         ],
         "APP_DIRS": True,
@@ -75,7 +73,6 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "dsfr.context_processors.site_config",
             ],
         },
     },
@@ -140,7 +137,7 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
+FORM_RENDERER = "django.forms.renderers.DjangoTemplates"
 
 # CSP-related options
 SECURE_HSTS_SECONDS = 2592000
